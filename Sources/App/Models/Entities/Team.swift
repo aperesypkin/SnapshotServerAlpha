@@ -30,6 +30,10 @@ extension Team: PostgreSQLModel {
     
     static var createdAtKey: TimestampKey? = \.createdAt
     static var updatedAtKey: TimestampKey? = \.updatedAt
+    
+    var reports: Children<Team, Report> {
+        return children(\.teamID)
+    }
 }
 
 // MARK: - Migration
@@ -40,7 +44,6 @@ extension Team: Migration {
         return Database.create(self, on: connection) { builder in
             try addProperties(to: builder)
             builder.unique(on: \.name)
-//            builder.reference(from: \.userID, to: \User.id)
         }
     }
 }
