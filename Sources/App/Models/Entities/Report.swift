@@ -33,8 +33,12 @@ extension Report: PostgreSQLModel {
     static var createdAtKey: TimestampKey? = \.createdAt
     static var updatedAtKey: TimestampKey? = \.updatedAt
     
-    var report: Parent<Report, Team> {
+    var team: Parent<Report, Team> {
         return parent(\.teamID)
+    }
+    
+    var snapshots: Children<Report, Snapshot> {
+        return children(\.reportID)
     }
 }
 
@@ -64,7 +68,7 @@ extension Report: Validatable {
     
     static func validations() throws -> Validations<Report> {
         var validations = Validations(self)
-        try validations.add(\.screenName, .count(5...50))
+        try validations.add(\.screenName, .count(3...50))
         return validations
     }
 }
