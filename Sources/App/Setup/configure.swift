@@ -10,6 +10,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     try services.register(FluentPostgreSQLProvider())
     try services.register(LeafProvider())
     try services.register(AuthenticationProvider())
+    services.register(NIOServerConfig.default(maxBodySize: 30_000_000))
     
     // Register routes to the router
     services.register(Router.self) { container -> EngineRouter in
